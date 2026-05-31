@@ -12,6 +12,5 @@ namespace apbdtask10_v2.ViewModels
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-
     }
 }
