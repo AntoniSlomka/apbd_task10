@@ -65,7 +65,7 @@ namespace apbdtask10_v2.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Home", "Dashboard");
                 }
                 else
                 {
@@ -76,6 +76,12 @@ namespace apbdtask10_v2.Controllers
             }
 
             return View(model);
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Home","Dashboard");
         }
 
     }
