@@ -2,6 +2,7 @@
 using apbdtask10_v2.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace apbdtask10_v2.Controllers
 {
@@ -82,6 +83,12 @@ namespace apbdtask10_v2.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Home","Dashboard");
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
     }
