@@ -34,7 +34,7 @@ namespace apbdtask10_v2.Controllers
             {
                 AppUser user = new AppUser
                 {
-                    UserName = model.Username, 
+                    UserName = model.Email, 
                     Email = model.Email
                 };
 
@@ -55,5 +55,28 @@ namespace apbdtask10_v2.Controllers
             }
             return View(model);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Incorrect credentials");
+                    return View(model);
+                }
+
+            }
+
+            return View(model);
+        }
+
     }
 }

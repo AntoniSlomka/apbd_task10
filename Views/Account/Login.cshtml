@@ -9,7 +9,6 @@
 <div class="container">
     <form asp-action="Login" method="post" class="mx-auto border p-4 rounded" style="max-width: 400px;">
         <h1 class="text-center">Login</h1>
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>    
         <div class="mb-3">
             <label asp-for="Email" class="form-label"></label>
             <input asp-for="Email" class="form-control" />
@@ -21,6 +20,10 @@
             <input asp-for="Password" class="form-control" />
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
         <input type="submit" value="Login" class="btn btn-primary w-100 p-2 mb-3"/>
         <div class="text-center">
             <a asp-controller="Account" asp-action="Register">Register new user</a>
