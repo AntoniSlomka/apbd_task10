@@ -1,12 +1,60 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using apbdtask10_v2.DTOs;
+using apbdtask10_v2.Models;
+using apbdtask10_v2.Service;
+using apbdtask10_v2.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace apbdtask10_v2.Controllers
 {
     public class DashboardController : Controller
     {
+
+        private readonly IUserNoteService _noteService;
+
+        public DashboardController(IUserNoteService noteService)
+        {
+            _noteService = noteService;
+        }
+
         [Authorize]
-        public IActionResult Home()
+        public async Task<IActionResult> Home()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var notes = await _noteService.GetAllUserNotes(userId!);
+
+            return View(notes);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> NewNote()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> NewNote(AddNoteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                UserNote note = new UserNote();
+                note.Title = model.Title;
+                note.Content = model.Content;
+                note.CreatedAt = DateTime.Now;
+                note.AppUserId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+                await _noteService.AddNote(note);
+                return RedirectToAction("Home", "Dashboard");
+            }
+            return View(model);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult Admin()
         {
             return View();
         }

@@ -1,5 +1,6 @@
 using apbdtask10_v2.Data;
 using apbdtask10_v2.Models;
+using apbdtask10_v2.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,6 +25,8 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 })
     .AddEntityFrameworkStores<DatabaseContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddScoped<IUserNoteService, UserNoteService>();
 
 var app = builder.Build();
 

@@ -1,7 +1,29 @@
-﻿@{
+﻿@using apbdtask10_v2.DTOs;
+@model List<UserNoteDTO>;
+
+@{
     ViewData["Title"] = "Home";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h2 class="display-5">User's private notes:</h2>
+
+    @if(Model.Any())
+    {
+        @foreach(var note in Model)
+        {
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">@note.Title</h5>
+                    <p class="card-text">@note.Content</p>
+                    <small class="text-muted">@note.CreatedAt</small>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p class="text-muted">You have no notes yet.</p>
+    }
+
 </div>

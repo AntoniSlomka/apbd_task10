@@ -5,6 +5,9 @@
     @if (signInManager.IsSignedIn(User))
     {
         <li class="nav-item">
+            <a class="nav-link" asp-controller="Dashboard" asp-action="NewNote">Create a Note</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" asp-controller="Account" asp-action="Logout">Logout</a>
         </li>
     }

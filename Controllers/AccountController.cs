@@ -36,7 +36,8 @@ namespace apbdtask10_v2.Controllers
                 AppUser user = new AppUser
                 {
                     UserName = model.Email, 
-                    Email = model.Email
+                    Email = model.Email,
+                    CreatedAt = DateTime.Now
                 };
 
                 var result = await _userManaager.CreateAsync(user, model.Password);
