@@ -41,6 +41,8 @@ namespace apbdtask10_v2.Controllers
                 };
 
                 var result = await _userManaager.CreateAsync(user, model.Password);
+                await _userManaager.AddToRoleAsync(user, "User");
+
 
                 if (result.Succeeded)
                 {

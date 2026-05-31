@@ -44,7 +44,7 @@ using (var scope = app.Services.CreateScope())
     if (await userManager.FindByEmailAsync("admin@gmail.com") == null)
     {
         var admin = new AppUser { UserName = "admin@gmail.com", Email = "admin@gmail.com", CreatedAt = DateTime.Now };
-        await userManager.CreateAsync(admin, "...");
+        await userManager.CreateAsync(admin, "AdminPassword123");
         await userManager.AddToRoleAsync(admin, "Admin");
     }
 }

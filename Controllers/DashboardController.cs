@@ -1,24 +1,27 @@
-﻿using apbdtask10_v2.DTOs;
+﻿using apbdtask10_v2.Data;
+using apbdtask10_v2.DTOs;
 using apbdtask10_v2.Models;
 using apbdtask10_v2.Service;
 using apbdtask10_v2.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace apbdtask10_v2.Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {
 
         private readonly IUserNoteService _noteService;
-
-        public DashboardController(IUserNoteService noteService)
+        private readonly IAppUserService _userService;
+        public DashboardController(IUserNoteService noteService, IAppUserService userService)
         {
             _noteService = noteService;
+            _userService = userService;
         }
 
-        [Authorize]
         public async Task<IActionResult> Home()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -28,13 +31,11 @@ namespace apbdtask10_v2.Controllers
             return View(notes);
         }
 
-        [Authorize]
-        public async Task<IActionResult> NewNote()
+        public IActionResult NewNote()
         {
             return View();
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> NewNote(AddNoteViewModel model)
         {
@@ -54,9 +55,11 @@ namespace apbdtask10_v2.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult Admin()
+        public async Task<IActionResult> Admin()
         {
-            return View();
+            var users = await _userService.GetAppUsers();
+
+            return View(users);
         }
     }
 }
