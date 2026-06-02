@@ -41,10 +41,12 @@ using (var scope = app.Services.CreateScope())
             await roleManager.CreateAsync(new IdentityRole(role));
     }
 
-    if (await userManager.FindByEmailAsync("admin@gmail.com") == null)
+    var email = ""; //Change this
+    var password = ""; //Change this
+    if (await userManager.FindByEmailAsync(email) == null)
     {
-        var admin = new AppUser { UserName = "admin@gmail.com", Email = "admin@gmail.com", CreatedAt = DateTime.Now };
-        await userManager.CreateAsync(admin, "AdminPassword123");
+        var admin = new AppUser { UserName = email, Email = email, CreatedAt = DateTime.Now };
+        await userManager.CreateAsync(admin, password);
         await userManager.AddToRoleAsync(admin, "Admin");
     }
 }
